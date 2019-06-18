@@ -1,0 +1,5 @@
+在mac上成功使用Android NDK生成独立交叉编译工具链，编译验证so和可执行文件，在Android device上验证
+在mac上编译opencv代码，部分头文件路径查找不到，分析中
+在mac上使用cmake编译opencv代码，可以正常生成文件，未报路径问题。
+需要研究cmake如何配置交叉编译环境，实现opencv的编译
+参考交叉编译文档中配置环境变量，然后编译opencv代码，待验证。
