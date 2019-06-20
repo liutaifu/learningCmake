@@ -1,0 +1,28 @@
+ARM 浮点体系结构 (VFP) 为半精度、单精度和双精度浮点运算中的浮点操作提供硬件支持。
+ARM VFP 的浮点功能为汽车动力系统、车身控制应用和图像应用（如打印中的缩放、转换和
+字体生成以及图形中的 3D 转换、FFT 和过滤）中使用的浮点运算提供增强的性能。下一代
+消费类产品（如 Internet 设备、机顶盒和家庭网关）可直接从 ARM VFP 受益。
+
+网址：https://www.cnblogs.com/Akagi201/archive/2012/03/31/2427063.html
+
+-mfpu=name
+-mfpe=number
+-mfp=number
+This specifies what floating point hardware (or hardware emulation) is available 
+on the target. Permissible names are: fpa, fpe2, fpe3, maverick, vfp. -mfp and 
+-mfpe are synonyms for -mfpu=fpenumber, for compatibility with older versions of GCC.
+ 
+ 
+ 
+-mfloat-abi=name
+Specifies which ABI to use for floating point values. Permissible values are: soft, softfp and hard.
+soft and hard are equivalent to -msoft-float and -mhard-float respectively. softfp allows the 
+generation of floating point instructions, but still uses the soft-float calling conventions.
+
+问题整理
+  1、在编译器中使能了neon（-mfpu=neon）之后，还能同时进行硬浮点计算吗？
+     因为之前用硬浮点时编译器选项是 -mfpu=vfpv3，现在开始用neon之后，将fpu配置成了neon，对之前的硬浮点计算有影响吗？
+     你的CPU是aarch64还是armv7的？
+     - 如果是aarch64，gcc已经没有-mfpu的选项. 参看: https://gcc.gnu.org/onlinedocs/gcc-7.3.0/gcc/AArch64-Options.html#AArch64-Options
+     - 如果是armv7，mfpu=neon下，也是可以产生硬件浮点指令的。对之前的硬浮点计算是没有影响的。
+       具体参看: https://gcc.gnu.org/onlinedocs/gcc-7.3.0/gcc/ARM-Options.html#ARM-Options
