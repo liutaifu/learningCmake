@@ -26,3 +26,40 @@
 今日将libc++_shared.so push到/vendor/lib/再次执行，程序运行正常。check success！
 
 需要解决2,3,4,5中的问题，如何使用cmake编译opencv
+
+今日验证，使用如下cmake配置编译，缺少opencv的函数定义，可以编译Android系统可运行程序。
+
+SET(CROSS_COMPILE 1)
+IF(CROSS_COMPILE)
+
+SET(CROSS_SYSTEM_NAME Linux)
+SET(CMAKE_SYSTEM_PROCESSOR arm)
+SET(TOOLCHAIN_DIR "/home2/xxxx/code/arm-linux/arm-linux-androideabi")
+SET(TOOLCHAIN_INCLUDE ${TOOLCHAIN_DIR}/sys-root/usr/include
+                                ${TOOLCHAIN_DIR}/include)
+SET(TOOLCHAIN_LIB ${TOOLCHAIN_DIR}/sys-root/usr/lib
+                                ${TOOLCHAIN_DIR}/lib )
+
+SET(CMAKE_CXX_COMPILER ${TOOLCHAIN_DIR}/bin/arm-linux-androideabi-g++)
+SET(CMAKE_C_COMPILER ${TOOLCHAIN_DIR}/bin/arm-linux-androideabi-gcc)
+SET(GNU_FLAGS "-mfpu=vfp -fPIC")
+SET(CMAKE_CXX_FLAGS ${GNU_FLAGS})
+SET(CMAKE_C_FLAGS ${GNU_FLAGS})
+
+SET(CMAKE_FIND_ROOT_PATH ${TOOLCHAIN_DIR})
+
+#FIND_PACKAGE(OpenCV REQUIRED)
+include_directories(/home2/xxxx/code/opencv/modules/core/include/)
+include_directories(/home2/xxxx/code/opencv/modules/flann/include/)
+include_directories(/home2/xxxx/code/opencv/modules/dnn/include/)
+include_directories(/home2/xxxxx/code/opencv/modules/ml/include/)
+include_directories(/home2/xxxx/code/opencv/modules/video/include/)
+include_directories(/home2/xxxx/code/opencv/modules/stitching/include/)
+include_directories(/home2/xxxx/code/opencv/modules/objdetect/include/)
+include_directories(/home2/xxxx/code/opencv/include/)
+
+SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+SET(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
+ENDIF(CROSS_COMPILE)
