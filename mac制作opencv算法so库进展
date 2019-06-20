@@ -64,5 +64,8 @@ SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 SET(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
 ENDIF(CROSS_COMPILE)
 
+参考此博客
+https://blog.csdn.net/minger1202/article/details/71429708
+
 6、如果使用第三方库，该如何编译
 7、opencv至此CUDA，如何导入
