@@ -78,7 +78,8 @@ https://blog.csdn.net/minger1202/article/details/71429708
 
 By not providing "FindOpenCV.cmake"
 add -DOpenCV_DIR=path_where_opencv_is_installed to cmake command line
-
+参考
+https://answers.opencv.org/question/24742/opencv-compilation-issues-on-mac-osx-mavericks/
 
 6、如果使用第三方库，该如何编译
 7、opencv至此CUDA，如何导入
