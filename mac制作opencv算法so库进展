@@ -67,5 +67,18 @@ ENDIF(CROSS_COMPILE)
 参考此博客
 https://blog.csdn.net/minger1202/article/details/71429708
 
+一、安装OpenCV for MAC
+  1. 首先下载opencv for mac安装源文件，解压缩
+  2. 安装cmake程序。下载cmake的dmg文件安装即可。
+  3. 通过终端进入存放解压后的opencv文件夹，编译安装opencv，使用命令如下：
+    >sudo cmake -G "Unix Makefiles"
+    >sudo make -j8
+    >sudo make install 
+  4. 经过步骤3则OpenCV已经被Compile完成，并且相应的lib文件存放在“/usr/local/lib”文件夹，h文件存放在“/usr/local/include”。
+
+By not providing "FindOpenCV.cmake"
+add -DOpenCV_DIR=path_where_opencv_is_installed to cmake command line
+
+
 6、如果使用第三方库，该如何编译
 7、opencv至此CUDA，如何导入
