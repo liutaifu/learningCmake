@@ -83,3 +83,6 @@ https://answers.opencv.org/question/24742/opencv-compilation-issues-on-mac-osx-m
 
 6、如果使用第三方库，该如何编译
 7、opencv至此CUDA，如何导入
+
+#error "OpenCV 4.x+ requires enabled C++11 support"解决方法
+  set(CMAKE_CXX_STANDARD 14)
