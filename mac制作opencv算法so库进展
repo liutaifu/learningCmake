@@ -1,8 +1,4 @@
 1、在mac上成功使用Android NDK生成独立交叉编译工具链，编译验证so和可执行文件，在Android device上验证
-2、在mac上编译opencv代码，部分头文件路径查找不到，分析中
-3、在mac上使用cmake编译opencv代码，可以正常生成文件，未报路径问题。
-4、需要研究cmake如何配置交叉编译环境，实现opencv的编译
-5、参考交叉编译文档中配置环境变量，然后编译opencv代码，待验证。
 
 2019/06/18
 验证如下：
@@ -25,10 +21,23 @@
 2019/06/19
 今日将libc++_shared.so push到/vendor/lib/再次执行，程序运行正常。check success！
 
+2、在mac上编译opencv代码，部分头文件路径查找不到，分析中
+3、在mac上使用cmake编译opencv代码，可以正常生成文件，未报路径问题。
+4、需要研究cmake如何配置交叉编译环境，实现opencv的编译
+5、参考交叉编译文档中配置环境变量，然后编译opencv代码，待验证。
 需要解决2,3,4,5中的问题，如何使用cmake编译opencv
 
 今日验证，使用如下cmake配置编译，缺少opencv的函数定义，可以编译Android系统可运行程序。
+这个是用的opencv是使用brew install的方式安装的。但是使用cmake编译会报错。
 
+
+6、使用cmake 交叉编译opencv
+   opencv支持多平台，针对所需平台需要单独编译，并使用对应的交叉编译工具。
+  6.1、参考opencv官方文档
+      https://docs.opencv.org/master/d0/d76/tutorial_arm_crosscompile_with_cmake.html
+  6.2、再开始编译之前，先把编译器切换成交叉编译工具，此处是重点！！！
+
+  6.3、如下是交叉编译配置cross.cmake文件
 SET(CROSS_COMPILE 1)
 IF(CROSS_COMPILE)
 
@@ -64,25 +73,10 @@ SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 SET(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
 ENDIF(CROSS_COMPILE)
 
-参考此博客
-https://blog.csdn.net/minger1202/article/details/71429708
 
-一、安装OpenCV for MAC
-  1. 首先下载opencv for mac安装源文件，解压缩
-  2. 安装cmake程序。下载cmake的dmg文件安装即可。
-  3. 通过终端进入存放解压后的opencv文件夹，编译安装opencv，使用命令如下：
-    >sudo cmake -G "Unix Makefiles"
-    >sudo make -j8
-    >sudo make install 
-  4. 经过步骤3则OpenCV已经被Compile完成，并且相应的lib文件存放在“/usr/local/lib”文件夹，h文件存放在“/usr/local/include”。
 
-By not providing "FindOpenCV.cmake"
-add -DOpenCV_DIR=path_where_opencv_is_installed to cmake command line
-参考
-https://answers.opencv.org/question/24742/opencv-compilation-issues-on-mac-osx-mavericks/
-
-6、如果使用第三方库，该如何编译
-7、opencv至此CUDA，如何导入
-
-#error "OpenCV 4.x+ requires enabled C++11 support"解决方法
-  set(CMAKE_CXX_STANDARD 14)
+7、如果使用第三方库，该如何编译
+8、opencv至此CUDA，如何导入
+9、编译中遇到的error整理
+  9.1、#error "OpenCV 4.x+ requires enabled C++11 support"，C++使用的是11版本以下，修改如下参数
+      set(CMAKE_CXX_STANDARD 14)
